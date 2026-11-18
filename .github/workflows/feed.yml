@@ -39,7 +39,7 @@ jobs:
           python3 release.py "$FULL" ${INC:+--incremental "$INC"}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- '*.json' 'a14' 'a13' 2>/dev/null || git add -A -- '*.json'
+          git add -A -- '*.json' download $(ls -d a14 a13 2>/dev/null)
           git diff --cached --quiet && exit 0
           git commit -m "feed: ${{ github.event.release.tag_name }}"
           git push origin main
