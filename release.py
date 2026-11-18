@@ -14,6 +14,11 @@ import zipfile
 
 REPO = "clangsdorff/ota"
 ROOT = os.path.dirname(os.path.abspath(__file__))
+WIKI = "https://github.com/clangsdorff/android_device_samsung_a14/wiki"
+DEVICES = {
+    "a14": ("Galaxy A14 4G (SM-A145F)", "SM-A145F", "a13", "Installation-A14"),
+    "a13": ("Galaxy A13 (SM-A135F)", "SM-A135F", "a14", "Installation-A13"),
+}
 
 
 def metadata(path):
@@ -53,6 +58,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("full", help="full ota zip")
     p.add_argument("--incremental", help="incremental ota zip from the previous build")
+    p.add_argument("--recovery", help="lineage-<device>-recovery.tar.md5 for odin")
     a = p.parse_args()
 
     name = os.path.basename(a.full)
@@ -88,8 +94,15 @@ def main():
             json.dump([inc], f, indent=2)
             f.write("\n")
 
-    assets = [a.full] + ([a.incremental] if a.incremental else [])
-    print("gh release create " + tag + " " + " ".join(assets) + f" -R {REPO} -t {tag} -n ''")
+    name, model, other, page = DEVICES[device]
+    notes = (f"**Only for {model}. Do not flash on any other phone, "
+             f"{other} files are in the {other}- releases.**\n\n"
+             f"Installation: {WIKI}/{page}\n"
+             f"Updating: {WIKI}/Updating")
+    assets = [a.full] + [x for x in (a.incremental, a.recovery) if x]
+    print(f"gh release create {tag} " + " ".join(assets)
+          + f" -R {REPO} -t '{name} {version} {m['post-build-incremental']}' --latest=false"
+          + f" -n {json.dumps(notes)}")
 
 
 if __name__ == "__main__":
