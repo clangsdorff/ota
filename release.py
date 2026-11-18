@@ -17,7 +17,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 WIKI = "https://github.com/clangsdorff/android_device_samsung_a14/wiki"
 DEVICES = {
     "a14": ("Galaxy A14 4G (SM-A145F / SM-A145M)", "SM-A145F / SM-A145M", "a13", "Installation-A14"),
-    "a13": ("Galaxy A13 (SM-A135F / SM-A135M)", "SM-A135F / SM-A135M", "a14", "Installation-A13"),
+    "a13": ("Galaxy A13 4G (SM-A135F / SM-A135M)", "SM-A135F / SM-A135M", "a14", "Installation-A13"),
 }
 
 
