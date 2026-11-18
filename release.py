@@ -107,7 +107,7 @@ def main():
                 f"Installation: {WIKI}/{page}\n\n"
                 f"Already on LineageOS? You dont need these, update from Settings > System > Updater.\n")
     notes = (f"**Only for {model}. Do not flash on any other phone, "
-             f"{other} files are in the {other}- releases.**\n\n"
+             f"Other phone: https://github.com/{REPO}/blob/main/download/{other}.md**\n\n"
              f"Installation: {WIKI}/{page}\n"
              f"Updating: {WIKI}/Updating")
     assets = [a.full] + [x for x in (a.incremental, a.recovery) if x]
