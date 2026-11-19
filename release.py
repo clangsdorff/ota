@@ -5,6 +5,7 @@
 #
 
 import argparse
+import datetime
 import glob
 import hashlib
 import json
@@ -59,6 +60,7 @@ def main():
     p.add_argument("full", help="full ota zip")
     p.add_argument("--incremental", help="incremental ota zip from the previous build")
     p.add_argument("--recovery", help="lineage-<device>-recovery.tar.md5 for odin")
+    p.add_argument("--changelog", help="text prepended to changelog/<device>.md")
     a = p.parse_args()
 
     name = os.path.basename(a.full)
@@ -93,6 +95,22 @@ def main():
         with open(os.path.join(ddir, f"{pre_incr}.json"), "w") as f:
             json.dump([inc], f, indent=2)
             f.write("\n")
+
+    if a.changelog and a.changelog.strip():
+        cdir = os.path.join(ROOT, "changelog")
+        os.makedirs(cdir, exist_ok=True)
+        cpath = os.path.join(cdir, f"{device}.md")
+        head, rest = f"# {device} changelog\n", ""
+        if os.path.exists(cpath):
+            with open(cpath) as f:
+                old = f.read()
+            if old.startswith(head):
+                rest = old[len(head):].lstrip("\n")
+            else:
+                rest = old
+        day = datetime.datetime.fromtimestamp(int(m["post-timestamp"]), datetime.timezone.utc).strftime("%Y-%m-%d")
+        with open(cpath, "w") as f:
+            f.write(f"{head}\n## {day} ({incr})\n\n{a.changelog.strip()}\n" + (f"\n{rest}" if rest else ""))
 
     name, model, other, page = DEVICES[device]
     base = f"https://github.com/{REPO}/releases/download/{tag}"
