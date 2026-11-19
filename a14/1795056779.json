@@ -1,0 +1,17 @@
+[
+  {
+    "datetime": 1795110883,
+    "type": "UNOFFICIAL",
+    "version": "24.0",
+    "files": [
+      {
+        "filename": "lineage-24.0-20261119-UNOFFICIAL-a14-incremental-1795056779.zip",
+        "os_patch_level": "2026-11-01",
+        "os_sdk_level": 37,
+        "sha256": "97a730f63f7ad5a9f0dbca6643f05e9dc600c6a22466489e18f0e48f6511770e",
+        "size": 182242613,
+        "url": "https://github.com/clangsdorff/ota/releases/download/a14-1795110883/lineage-24.0-20261119-UNOFFICIAL-a14-incremental-1795056779.zip"
+      }
+    ]
+  }
+]
