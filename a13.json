@@ -1,16 +1,16 @@
 [
   {
-    "datetime": 1795181733,
+    "datetime": 1795219624,
     "type": "UNOFFICIAL",
     "version": "24.0",
     "files": [
       {
-        "filename": "lineage-24.0-20261120-UNOFFICIAL-a13.zip",
+        "filename": "lineage-24.0-20261121-UNOFFICIAL-a13.zip",
         "os_patch_level": "2026-11-01",
         "os_sdk_level": 37,
-        "sha256": "a5fbf93c3b574b24f17f9f83ad18e7af4877df85fe0e213bb53c208d884a11c8",
-        "size": 1750008018,
-        "url": "https://github.com/clangsdorff/ota/releases/download/a13-1795181733/lineage-24.0-20261120-UNOFFICIAL-a13.zip"
+        "sha256": "28916a799a21ab8badc8041fb1ed8908c40f25fa66d9b17a32c696c82f52c16b",
+        "size": 1747026478,
+        "url": "https://github.com/clangsdorff/ota/releases/download/a13-1795219624/lineage-24.0-20261121-UNOFFICIAL-a13.zip"
       }
     ]
   }
