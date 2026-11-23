@@ -115,12 +115,23 @@ def main():
     name, model, other, page = DEVICES[device]
     base = f"https://github.com/{REPO}/releases/download/{tag}"
     rec = f"lineage-{device}-recovery.tar.md5"
-    os.makedirs(os.path.join(ROOT, "download"), exist_ok=True)
-    with open(os.path.join(ROOT, "download", f"{device}.md"), "w") as f:
+    dpath = os.path.join(ROOT, "download", f"{device}.md")
+    rec_url = f"{base}/{rec}"
+    if not a.recovery:
+        rec_url = None
+        if os.path.exists(dpath):
+            with open(dpath) as f:
+                r = re.search(r"^1\. Recovery: \[[^\]]+\]\(([^)]+)\)", f.read(), re.M)
+            if r:
+                rec_url = r.group(1)
+        if not rec_url:
+            raise SystemExit("no recovery in this release and no previous recovery link")
+    os.makedirs(os.path.dirname(dpath), exist_ok=True)
+    with open(dpath, "w") as f:
         f.write(f"# Download for {name}\n\n"
                 f"**Only for {model}.** Not your phone? Go back to {WIKI}\n\n"
                 f"Latest build: `{os.path.basename(a.full)}`\n\n"
-                f"1. Recovery: [{rec}]({base}/{rec})\n"
+                f"1. Recovery: [{rec}]({rec_url})\n"
                 f"2. ROM: [{os.path.basename(a.full)}]({base}/{os.path.basename(a.full)})\n\n"
                 f"Installation: {WIKI}/{page}\n\n"
                 f"Already on LineageOS? You dont need these, update from Settings > System > Updater.\n")

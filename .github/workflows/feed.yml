@@ -23,6 +23,7 @@ jobs:
 
       - name: Update the feed
         env:
+          GH_TOKEN: ${{ github.token }}
           BODY: ${{ github.event.release.body }}
         run: |
           CHANGELOG=$(printf '%s\n' "$BODY" | tr -d '\r' | sed -n '/^## Changelog$/,$p' | sed '1d')
@@ -39,7 +40,8 @@ jobs:
             echo "missing full ota zip" >&2
             exit 1
           fi
-          python3 release.py "$FULL" ${INC:+--incremental "$INC"} ${CHANGELOG:+--changelog "$CHANGELOG"}
+          REC=$(gh release view "${{ github.event.release.tag_name }}" --json assets -q '.assets[].name | select(endswith("-recovery.tar.md5"))' | head -n 1)
+          python3 release.py "$FULL" ${INC:+--incremental "$INC"} ${REC:+--recovery "$REC"} ${CHANGELOG:+--changelog "$CHANGELOG"}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A -- '*.json' download changelog $(ls -d a14 a13 2>/dev/null)
